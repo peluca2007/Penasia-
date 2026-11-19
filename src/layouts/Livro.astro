@@ -1,0 +1,71 @@
+---
+import '../styles/livro.css';
+const { frontmatter = {}, title: propTitle, chap: propChap } = Astro.props;
+const title = propTitle ?? frontmatter.title ?? 'Penasia';
+const chap = propChap ?? frontmatter.chap ?? '';
+const desc = frontmatter.description ?? 'Penasia: um sistema de RPG onde todo poder é crédito e toda dívida é cobrada.';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const capitulos = [
+  ['/', 'Início'],
+  ['/mundo', 'I · O mundo'],
+  ['/personagem', 'II · O personagem'],
+  ['/balanca', 'III · A Balança'],
+  ['/combate', 'IV · Combate'],
+  ['/classes', 'V · Classes'],
+  ['/magia', 'VI · Magia'],
+  ['/pacto', 'VII · Pactos e Dívida'],
+  ['/progressao', 'VIII · Progressão'],
+  ['/ferramentas', 'Ferramentas da mesa'],
+  ['/decisoes', 'A · Decisões em aberto'],
+  ['/glossario', 'B · Glossário'],
+];
+const i = capitulos.findIndex(([href]) => href === path);
+const prev = i > 0 ? capitulos[i - 1] : null;
+const next = i >= 0 && i < capitulos.length - 1 ? capitulos[i + 1] : null;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{path === '/' ? 'Penasia' : `${title} · Penasia`}</title>
+  <meta name="description" content={desc} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=Spectral:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="mtop">
+    <a class="marca" href="/">Penasia</a>
+    <details class="mnav">
+      <summary>Capítulos</summary>
+      <nav aria-label="Capítulos">
+        {capitulos.map(([href, label]) => <a href={href} aria-current={href === path ? 'page' : undefined}>{label}</a>)}
+      </nav>
+    </details>
+  </header>
+  <div class="shell">
+    <aside class="toc">
+      <a class="marca" href="/">Penasia</a>
+      <div class="ver">Livro em escrita · v0.2</div>
+      <nav aria-label="Capítulos">
+        {capitulos.map(([href, label]) => <a href={href} aria-current={href === path ? 'page' : undefined}>{label}</a>)}
+      </nav>
+    </aside>
+    <main id="conteudo">
+      <article class="page">
+        {chap && <div class="chap">{chap}</div>}
+        <slot />
+      </article>
+      <nav class="pager" aria-label="Navegação entre capítulos">
+        {prev ? <a href={prev[0]}>← {prev[1]}</a> : <span></span>}
+        {next ? <a class="nx" href={next[0]}>{next[1]} →</a> : <span></span>}
+      </nav>
+      <footer>Penasia é um sistema em construção. Nada aqui foi testado em mesa ainda; os números vêm de simulações.</footer>
+    </main>
+  </div>
+</body>
+</html>

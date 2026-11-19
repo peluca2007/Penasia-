@@ -1,0 +1,68 @@
+/* Penasia: papel e tinta. As cores dos 7 pecados marcam regras ligadas a eles;
+   o carmim marca as notas do revisor. Tema claro e escuro pelo sistema. */
+:root{
+  --bg:#efebe4;--page:#f8f5ef;--ink:#211c1a;--muted:#655b55;--rule:#d6cec4;--soft:#e7e1d8;
+  --accent:#7d2a1e;--gold:#8a6410;
+  --s-fechado:#2f6f45;--s-consenso:#2f5a96;--s-proposta:#7a5a12;--s-aberto:#9a3322;
+  --ira:#c2402a;--lux:#b52f7f;--pre:#4a6cc0;--gan:#b97a14;--inv:#2f8a5c;--gul:#8f5a2a;--org:#a8821a;
+  --display:'Fraunces',Georgia,serif;--body:'Spectral',Georgia,serif;--mono:'JetBrains Mono',ui-monospace,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#15120f;--page:#1c1815;--ink:#ece4d6;--muted:#a99d90;--rule:#3a332d;--soft:#28221d;
+  --accent:#e0826c;--gold:#e8c96a;
+  --s-fechado:#79c995;--s-consenso:#8db3f0;--s-proposta:#e3bf6a;--s-aberto:#f08a74;
+  --ira:#e0553a;--lux:#d6489a;--pre:#6f8fd8;--gan:#e0a43a;--inv:#4fb37a;--gul:#c4824a;--org:#f0d27a;
+  color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:18px/1.65 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+img{max-width:100%}
+a{color:var(--accent)}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:8px;z-index:50;background:var(--page);padding:8px}
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:230px minmax(0,1fr);gap:40px}
+.marca{font:900 26px/1 var(--display);color:var(--ink);text-decoration:none}
+aside.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:36px 0 40px}
+aside.toc .ver{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:6px 0 22px}
+aside.toc nav a,.mnav nav a{display:block;color:var(--muted);text-decoration:none;font-size:15px;padding:5px 0 5px 12px;border-left:2px solid var(--rule)}
+aside.toc nav a:hover,aside.toc nav a[aria-current],.mnav nav a[aria-current]{color:var(--ink);border-color:var(--accent)}
+.mtop{display:none}
+@media(max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0}
+  aside.toc{display:none}
+  .mtop{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--rule)}
+  .mnav summary{cursor:pointer;font:600 15px var(--body);padding:8px 12px;border:1px solid var(--rule);border-radius:8px;list-style:none}
+  .mnav[open] nav{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:58px;background:var(--page);border:1px solid var(--rule);border-radius:8px;padding:10px 14px;width:min(320px,calc(100vw - 32px))}
+}
+main{min-width:0;padding:36px 0 40px}
+.page{background:var(--page);border:1px solid var(--rule);border-radius:4px;padding:clamp(22px,5vw,64px);margin-bottom:20px}
+.chap{font:500 12px var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h1{font:900 clamp(56px,11vw,128px)/.92 var(--display);margin:10px 0 16px;letter-spacing:-.02em}
+h2{font:800 clamp(32px,5vw,50px)/1.05 var(--display);margin:0 0 18px;text-wrap:balance}
+h3{font:700 26px/1.2 var(--display);margin:40px 0 12px;text-wrap:balance}
+h4{font:700 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:26px 0 8px}
+p,ul,ol{max-width:68ch}
+p{margin:0 0 14px}
+li{margin-bottom:6px}
+.lede{font-size:21px;max-width:60ch}
+.tag{font:italic 400 clamp(20px,2.6vw,26px) var(--body);color:var(--muted)}
+.st{display:inline-block;font:700 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid currentColor;vertical-align:3px;margin-left:6px;white-space:nowrap}
+.st.fechado{color:var(--s-fechado)}.st.consenso{color:var(--s-consenso)}.st.proposta{color:var(--s-proposta)}.st.aberto{color:var(--s-aberto)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:15px;color:var(--muted)}
+.legend .st{margin:0 6px 0 0}
+table{border-collapse:collapse;width:100%;font-size:15.5px;margin:10px 0 20px;display:block;overflow-x:auto}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font:700 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--soft);white-space:nowrap}
+td{font-variant-numeric:tabular-nums}
+.rev{border:1px solid var(--accent);border-left-width:5px;border-radius:4px;padding:14px 18px;margin:18px 0;background:color-mix(in srgb,var(--accent) 6%,var(--page))}
+.rev>p:first-child::before{content:"Nota do revisor";display:block;font:700 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.rev p:last-child,.box p:last-child{margin-bottom:0}
+.box{border:1px solid var(--rule);border-radius:4px;padding:14px 18px;margin:16px 0;background:var(--soft)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.ira{background:var(--ira)}.lux{background:var(--lux)}.pre{background:var(--pre)}.gan{background:var(--gan)}.inv{background:var(--inv)}.gul{background:var(--gul)}.org{background:var(--org)}
+.pager{display:flex;justify-content:space-between;gap:16px;margin:0 0 20px;flex-wrap:wrap}
+.pager a{font:600 16px var(--display);text-decoration:none;padding:10px 14px;border:1px solid var(--rule);border-radius:4px;background:var(--page);color:var(--ink)}
+.pager a:hover{border-color:var(--accent)}
+footer{color:var(--muted);font-size:14px;padding:10px 0 40px}
+a:focus-visible,summary:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
